@@ -1,0 +1,120 @@
+.container {
+  max-width: 800px; /* Increased width to accommodate two columns */
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Added elevation */
+  border-radius: 12px;
+  box-sizing: border-box; /* Ensures proper padding and width calculations */
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+.user-details {
+  display: grid; /* Use grid layout */
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  gap: 20px; /* Space between items */
+}
+
+.input-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-box span.details {
+  font-size: 14px;
+  font-weight: 600;
+  color: #444444;
+  margin-bottom: 8px;
+}
+
+.input-box input,
+.gender-details select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px;
+  border: 1px solid #d1d1d1;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+  color: #333333;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-box input:focus,
+.gender-details select:focus {
+  border-color: #6a7cfe;
+  box-shadow: 0 2px 6px rgba(106, 124, 254, 0.3);
+  outline: none;
+}
+
+.gender-details {
+  grid-column: auto; /* Default behavior for grid */
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px; /* Adjust margin for spacing */
+}
+
+.gender-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #555555;
+  margin-bottom: 8px;
+}
+
+.button {
+  grid-column: span 2; /* Make button span across two columns */
+}
+
+.button input {
+  width: 100%;
+  margin-top: 20px;
+  background-color: #6a7cfe;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 18px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button input:hover {
+  background-color: #5467e4;
+  transform: scale(1.01);
+}
+
+@media (max-width: 768px) {
+  .user-details {
+    grid-template-columns: 1fr; /* Stack fields on smaller screens */
+  }
+
+  .container {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .input-box input {
+    padding: 12px;
+    font-size: 13px;
+  }
+
+  .button input {
+    padding: 12px;
+    font-size: 14px;
+  }
+}

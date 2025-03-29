@@ -1,0 +1,36 @@
+<form [formGroup]="BookAppointmentForm" (ngSubmit)="onSubmit()">
+  <!-- Start Slot -->
+  <div>
+    <label for="startSlot">Start Slot:</label>
+    <input
+      id="startSlot"
+      type="datetime-local"
+      formControlName="startSlot"
+      required
+    />
+  </div>
+
+  <!-- End Slot -->
+  <div>
+    <label for="endSlot">End Slot:</label>
+    <input
+      id="endSlot"
+      type="datetime-local"
+      formControlName="endSlot"
+      required
+    />
+  </div>
+
+  <!-- Doctor ID -->
+  <div>
+    <label for="doctorId">Select Doctor:</label>
+    <select id="doctorId" formControlName="doctorId" required>
+      <option *ngFor="let doctor of doctors" [value]="doctor.id">
+        {{ doctor.name }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Submit Button -->
+  <button type="submit" [disabled]="BookAppointmentForm.invalid">Submit</button>
+</form>

@@ -1,0 +1,97 @@
+<div class="container">
+  <!-- Title section -->
+  <div class="title">Registration</div>
+  <div class="content">
+    <!-- Registration form -->
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+      <div class="user-details">
+        <!-- Input for Full Name -->
+        <div class="input-box">
+          <span class="details">Name</span>
+          <input
+            type="text"
+            formControlName="name"
+            placeholder="Enter your name"
+            required
+          />
+        </div>
+        <!-- Input for Email -->
+        <div class="input-box">
+          <span class="details">Email</span>
+          <input
+            type="email"
+            formControlName="email"
+            placeholder="Enter your email"
+            required
+          />
+        </div>
+        <!-- Input for Password -->
+        <div class="input-box">
+          <span class="details">Password</span>
+          <input
+            type="password"
+            formControlName="password"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+        <div class="input-box">
+          <span class="details">Confirm Password</span>
+          <input
+            type="password"
+            formControlName="confirmPassword"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+        <!-- Input for Age -->
+        <div class="input-box">
+          <span class="details">Age</span>
+          <input
+            type="number"
+            formControlName="age"
+            placeholder="Enter your age"
+            required
+          />
+        </div>
+        <!-- Gender selection -->
+        <div class="gender-details">
+          <span class="gender-title">Gender</span>
+          <div class="input-box">
+            <select formControlName="gender" required>
+              <option value="" disabled selected>Select your gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Input for Emergency Contact Name -->
+        <div class="input-box">
+          <span class="details">Emergency Contact Name</span>
+          <input
+            type="text"
+            formControlName="EmergencyContactName"
+            placeholder="Enter emergency contact name"
+            required
+          />
+        </div>
+        <!-- Input for Emergency Contact Number -->
+        <div class="input-box">
+          <span class="details">Emergency Contact Number</span>
+          <input
+            type="tel"
+            formControlName="EmergencyContactNumber"
+            placeholder="Enter emergency contact number"
+            required
+          />
+        </div>
+      </div>
+      <!-- Submit button -->
+      <div class="button">
+        <input type="submit" value="Register" />
+      </div>
+    </form>
+  </div>
+</div>

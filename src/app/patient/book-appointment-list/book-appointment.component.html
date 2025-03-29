@@ -1,0 +1,28 @@
+<a routerLink="/addBookAppointment">Book Appointment</a>
+<!-- <button class="get-doctors-btn" (click)="getAllDoctors()">
+  Get All Doctors
+</button>
+
+<div class="doctor-card" *ngFor="let item of doctors">
+  <h3>{{ item.name }}</h3>
+  <p><strong>Speciality:</strong> {{ item.speciality }}</p>
+</div> -->
+
+<table>
+  <thead>
+    <tr>
+      <th>Doctor</th>
+      <th>Start Slot</th>
+      <th>End Slot</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of appointments">
+      <td>{{ item.doctor?.name }}</td>
+      <td>{{ item.startSlot | date : "MMM dd, yyyy hh:mm a" }}</td>
+      <td>{{ item.endSlot | date : "MMM dd, yyyy hh:mm a" }}</td>
+      <td>{{ item.status }}</td>
+    </tr>
+  </tbody>
+</table>
