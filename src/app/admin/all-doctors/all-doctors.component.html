@@ -1,0 +1,58 @@
+<!-- doctors-listing.component.html -->
+<button routerLink="/createDoctor">create doctor</button>
+<div class="doctors-container">
+  <h1>Our Medical Team</h1>
+  <div class="search-bar">
+    <input
+      type="text"
+      placeholder="Search doctors by name or speciality"
+      [(ngModel)]="searchTerm"
+    />
+    <button class="search-button">
+      <span class="material-icons">search</span>
+    </button>
+  </div>
+
+  <div class="doctors-grid">
+    <div class="doctor-card" *ngFor="let doctor of filteredDoctors()">
+      <div class="doctor-avatar">
+        <div class="avatar-placeholder">
+          <span
+            >{{ doctor.name.split(" ")[0][0]
+            }}{{ doctor.name.split(" ")[1][0] }}</span
+          >
+        </div>
+      </div>
+      <div class="doctor-details">
+        <h2>{{ doctor.name }}</h2>
+        <span class="speciality-tag">{{ doctor.speciality }}</span>
+        <div class="contact-info">
+          <div class="info-item">
+            <span class="material-icons">email</span>
+            <p>{{ doctor.email }}</p>
+          </div>
+          <!-- <div class="info-item">
+            <span class="material-icons">badge</span>
+            <p>ID: {{ doctor.id }}</p>
+          </div> -->
+        </div>
+        <div class="action-buttons">
+          <button class="btn primary" (click)="getAppointment(doctor.id)">
+            See Appointment
+          </button>
+          <button class="btn secondary" (click)="showPassword(doctor.id)">
+            View Password
+          </button>
+
+          <p *ngIf="isDisplay">
+            {{ doctor.password }}
+          </p>
+
+          <button class="btn secondary" (click)="deleteDoctor(doctor.id)">
+            InActivate
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

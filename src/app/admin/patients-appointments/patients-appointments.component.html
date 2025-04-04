@@ -1,0 +1,79 @@
+<!-- appointment-list.component.html -->
+<div class="table-container-right">
+  <h2 class="table-title">Appointments</h2>
+
+  <div class="table-filters">
+    <div class="filter-item">
+      <select class="filter-select">
+        <option value="all">All Appointments</option>
+        <option value="upcoming">Upcoming</option>
+        <option value="past">Past</option>
+        <option value="cancelled">Cancelled</option>
+      </select>
+    </div>
+    <div class="search-box">
+      <input type="text" placeholder="Search appointments..." />
+      <span class="search-icon">🔍</span>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Doctor</th>
+          <th>Date</th>
+          <th>Time Slot</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let item of appointments"
+          [attr.data-status]="item.status.toLowerCase()"
+        >
+          <td data-label="Doctor">{{ item.doctor?.name }}</td>
+          <td data-label="Date">{{ item.day }}</td>
+          <td data-label="Time Slot">{{ formatTimeSlot(item.timeSlot) }}</td>
+          <td data-label="Status" [attr.title]="item.status">
+            {{ item.status }}
+          </td>
+          <!-- <td data-label="Action">
+            <button
+              class="btn-cancel"
+              (click)="cancelAppointment(item.id)"
+              [disabled]="item.status === 'Cancelled'"
+            >
+              <span class="btn-icon">✕</span> Cancel
+            </button>
+          </td> -->
+          <!-- <td data-label="Action">
+            <button
+              class="btn-update"
+              [routerLink]="['/reshedule', item.id]"
+              [disabled]="item.status === 'Confirmed'"
+            >
+              <span class="btn-icon">↻</span> Reschedule
+            </button>
+          </td> -->
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Empty state for when there are no appointments -->
+  <div class="empty-state" *ngIf="appointments.length === 0">
+    <div class="empty-icon">📅</div>
+    <h3>No Appointments Found</h3>
+    <p>You don't have any appointments scheduled right now.</p>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination" *ngIf="appointments.length > 0">
+    <button class="page-btn">&laquo;</button>
+    <button class="page-btn active">1</button>
+    <button class="page-btn">2</button>
+    <button class="page-btn">3</button>
+    <button class="page-btn">&raquo;</button>
+  </div>
+</div>

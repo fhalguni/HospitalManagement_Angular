@@ -1,0 +1,44 @@
+<form [formGroup]="adminForm" (ngSubmit)="onSubmit()" class="form-container">
+  <!-- Day Selection -->
+  <div class="form-group">
+    <label for="name" class="form-label">Name:</label>
+    <input
+      id="name"
+      type="text"
+      formControlName="name"
+      class="form-input"
+      required
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="speciality" class="form-label">Speciality:</label>
+    <input
+      id="speciality"
+      type="text"
+      formControlName="speciality"
+      class="form-input"
+      required
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="email" class="form-label">Email:</label>
+    <input
+      id="email"
+      type="text"
+      formControlName="email"
+      class="form-input"
+      required
+    />
+  </div>
+
+  <!-- Time Slot Selection -->
+
+  <!-- Submit Button -->
+  <div class="form-group">
+    <button type="submit" [disabled]="adminForm.invalid" class="btn-submit">
+      Submit
+    </button>
+  </div>
+</form>

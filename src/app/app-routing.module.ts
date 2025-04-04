@@ -4,6 +4,8 @@ import { RegisterComponent } from './auth/register/register.component';
 import { LoginComponent } from './auth/login/login.component';
 import { BookAppointmentComponent } from './patient/book-appointment-list/book-appointment.component';
 import { authGuard } from './auth/auth.guard';
+import { HomeComponent } from './home/home.component';
+import { RouteProtectionGuard } from './auth/route-protection.guard';
 
 const routes: Routes = [
   {
@@ -12,12 +14,33 @@ const routes: Routes = [
   },
   {
     path: 'login',
+    canActivate: [RouteProtectionGuard],
     component: LoginComponent,
   },
   {
     path: 'bookAppointment',
-    canActivate: [authGuard],
+    // canActivate: [authGuard],
     component: BookAppointmentComponent,
+  },
+  {
+    path: 'home',
+    component: HomeComponent,
+  },
+  {
+    path: 'patients',
+    canActivate: [authGuard],
+    loadChildren: () =>
+      import('./patient/patient.module').then((m) => m.PatientModule),
+  },
+  {
+    path: 'doctors',
+    loadChildren: () =>
+      import('./doctor/doctor.module').then((m) => m.DoctorModule),
+  },
+  {
+    path: 'admin',
+    loadChildren: () =>
+      import('./admin/admin.module').then((m) => m.AdminModule),
   },
 ];
 

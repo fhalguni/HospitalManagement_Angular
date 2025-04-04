@@ -1,0 +1,431 @@
+/* Doctor's Appointment Table Styles */
+.table-container-right {
+  overflow-x: auto;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.styled-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: "Poppins", sans-serif;
+  color: #444;
+}
+
+.styled-table thead tr {
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  color: white;
+  text-align: left;
+  font-weight: 500;
+}
+
+.styled-table th {
+  padding: 14px 20px;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  position: relative;
+}
+
+.styled-table th:not(:last-child):after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 25%;
+  height: 50%;
+  width: 1px;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.styled-table tr {
+  transition: all 0.2s ease;
+}
+
+.styled-table tbody tr {
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.styled-table tbody tr:last-of-type {
+  border-bottom: none;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+  background-color: #f9f9fd;
+}
+
+.styled-table tbody tr:hover {
+  background-color: #f0f4ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+}
+
+.styled-table td {
+  padding: 14px 20px;
+  vertical-align: middle;
+  font-size: 14px;
+  color: #555;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.styled-table td:first-child {
+  font-weight: 500;
+  color: #333;
+}
+
+/* Status styling with color indicators */
+.styled-table td:nth-child(4) {
+  position: relative;
+  padding-left: 28px;
+}
+
+.styled-table td:nth-child(4)::before {
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.styled-table td:nth-child(4)[title="Confirmed"]::before,
+.styled-table td:nth-child(4):contains("Confirmed")::before {
+  background-color: #10b981;
+}
+
+.styled-table td:nth-child(4)[title="Pending"]::before,
+.styled-table td:nth-child(4):contains("Pending")::before {
+  background-color: #f59e0b;
+}
+
+.styled-table td:nth-child(4)[title="Cancelled"]::before,
+.styled-table td:nth-child(4):contains("Cancelled")::before,
+.styled-table td:nth-child(4):contains("Rejected")::before {
+  background-color: #ef4444;
+}
+
+.styled-table td:nth-child(4)[title="Completed"]::before,
+.styled-table td:nth-child(4):contains("Completed")::before {
+  background-color: #3b82f6;
+}
+
+/* Button styles */
+.btn-cancel,
+.btn-confirm {
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-cancel {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.btn-cancel:hover:not([disabled]) {
+  background-color: #fecaca;
+  transform: translateY(-2px);
+}
+
+.btn-confirm {
+  background-color: #dcfce7;
+  color: #16a34a;
+}
+
+.btn-confirm:hover:not([disabled]) {
+  background-color: #bbf7d0;
+  transform: translateY(-2px);
+}
+
+.btn-cancel[disabled],
+.btn-confirm[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Status-based row coloring */
+.styled-table tr[data-status="confirmed"] {
+  border-left: 3px solid #10b981;
+}
+
+.styled-table tr[data-status="pending"] {
+  border-left: 3px solid #f59e0b;
+}
+
+.styled-table tr[data-status="cancelled"],
+.styled-table tr[data-status="rejected"] {
+  border-left: 3px solid #ef4444;
+  opacity: 0.7;
+}
+
+.styled-table tr[data-status="completed"] {
+  border-left: 3px solid #3b82f6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .table-container-right {
+    padding: 10px;
+  }
+
+  .styled-table thead {
+    display: none;
+  }
+
+  .styled-table,
+  .styled-table tbody,
+  .styled-table tr,
+  .styled-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .styled-table tr {
+    margin-bottom: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eaeaea;
+  }
+
+  .styled-table td {
+    text-align: right;
+    padding: 12px 15px;
+    position: relative;
+    border-bottom: 1px solid #f1f1f1;
+  }
+
+  .styled-table td:before {
+    content: attr(data-label);
+    position: absolute;
+    left: 15px;
+    width: 50%;
+    padding-right: 15px;
+    text-align: left;
+    font-weight: 600;
+    color: #777;
+  }
+
+  .styled-table td:last-child {
+    border-bottom: none;
+  }
+
+  .btn-cancel,
+  .btn-confirm {
+    margin: 5px 0;
+    display: block;
+    width: 100%;
+  }
+}
+/* Additional styles for filters, empty state, and pagination */
+
+.table-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.table-title:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  border-radius: 3px;
+}
+
+.table-filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.filter-select {
+  padding: 10px 15px;
+  border-radius: 6px;
+  border: 1px solid #e1e1e1;
+  background-color: #f9f9fd;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  color: #555;
+  min-width: 180px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #6e8efb;
+  box-shadow: 0 0 0 3px rgba(110, 142, 251, 0.15);
+}
+
+.search-box {
+  position: relative;
+}
+
+.search-box input {
+  padding: 10px 15px 10px 38px;
+  border-radius: 6px;
+  border: 1px solid #e1e1e1;
+  background-color: #f9f9fd;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  color: #555;
+  min-width: 220px;
+  transition: all 0.2s ease;
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: #6e8efb;
+  box-shadow: 0 0 0 3px rgba(110, 142, 251, 0.15);
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  pointer-events: none;
+}
+
+.btn-icon {
+  display: inline-block;
+  margin-right: 5px;
+  font-size: 11px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #f9f9fd;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 15px;
+}
+
+.empty-state h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.empty-state p {
+  color: #777;
+  margin-bottom: 20px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 20px;
+}
+
+.page-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  border: 1px solid #e1e1e1;
+  background-color: white;
+  color: #555;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.page-btn:hover:not([disabled]) {
+  border-color: #6e8efb;
+  color: #6e8efb;
+}
+
+.page-btn.active {
+  background-color: #6e8efb;
+  border-color: #6e8efb;
+  color: white;
+}
+
+.page-btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Appointment statistics */
+.appointment-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+}
+
+.stat-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  font-size: 20px;
+}
+
+.stat-icon.pending {
+  background-color: #fff7ed;
+  color: #f59e0b;
+}
+
+.stat-icon.confirmed {
+  background-color: #ecfdf5;
+  color: #10b981;
+}
+
+.stat-icon.rejected {
+  background-color: #fef2f2;
+  color: #ef4444;
+}
+
+.stat-info h4 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+  color: #333;
+}
+
+.stat-info span {
+  font-size: 13px;
+  color: #777;
+}

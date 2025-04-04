@@ -1,0 +1,85 @@
+<!-- profile-edit.component.html -->
+<div class="profile-form-container">
+  <h2>Edit Patient Profile</h2>
+
+  <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="age">Age</label>
+      <input
+        type="number"
+        id="age"
+        formControlName="age"
+        class="form-control"
+        placeholder="Enter your age"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="gender">Gender</label>
+      <select id="gender" formControlName="gender" class="form-control">
+        <option value="">Select gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+        <option value="prefer-not-to-say">Prefer not to say</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="address">Address</label>
+      <textarea
+        id="address"
+        formControlName="address"
+        class="form-control"
+        rows="3"
+        placeholder="Enter your full address"
+      ></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="medicalHistory">Medical History</label>
+      <textarea
+        id="medicalHistory"
+        formControlName="medicalHistory"
+        class="form-control"
+        rows="4"
+        placeholder="Previous conditions, surgeries, etc."
+      ></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="currentMedication">Current Medication</label>
+      <textarea
+        id="currentMedication"
+        formControlName="currentMedication"
+        class="form-control"
+        rows="3"
+        placeholder="List all current medications with dosage"
+      ></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="allergies">Allergies</label>
+      <textarea
+        id="allergies"
+        formControlName="allergies"
+        class="form-control"
+        rows="3"
+        placeholder="Known allergies to medications or other substances"
+      ></textarea>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn btn-secondary" (click)="onCancel()">
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="editProfileForm.invalid"
+      >
+        Save Changes
+      </button>
+    </div>
+  </form>
+</div>

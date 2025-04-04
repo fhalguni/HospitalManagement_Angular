@@ -1,0 +1,67 @@
+/* Home Page Styling */
+.home-page {
+  text-align: center;
+  padding: 30px;
+}
+
+.home-page h1 {
+  color: #007bff; /* Blue for the heading */
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.home-page p {
+  font-size: 18px;
+  color: #6c757d; /* Subtle gray for text */
+  margin-bottom: 40px;
+}
+
+/* Card Container */
+.card-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 300px;
+  padding: 20px;
+  background-color: #f8f9fa; /* Light gray background */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  border-radius: 10px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.05); /* Slight zoom on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.card h2 {
+  font-size: 24px;
+  color: #343a40; /* Dark gray for headings */
+  margin-bottom: 15px;
+}
+
+.card p {
+  font-size: 16px;
+  color: #6c757d; /* Subtle gray for text */
+  margin-bottom: 20px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  color: white;
+  background-color: #007bff; /* Blue button */
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}

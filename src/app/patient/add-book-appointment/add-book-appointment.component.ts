@@ -4,7 +4,9 @@ import { PatientService } from '../patient.service';
 import { Doctor } from '../../models/doctor.model';
 import { map } from 'rxjs';
 import { SocketService } from '../../socket.service';
-
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
+import { AuthService } from '../../auth/auth.service';
 @Component({
   selector: 'app-add-book-appointment',
   standalone: false,
@@ -12,16 +14,21 @@ import { SocketService } from '../../socket.service';
   styleUrl: './add-book-appointment.component.css',
 })
 export class AddBookAppointmentComponent implements OnInit, OnDestroy {
+  token!: string | null;
   appointments: any[] = [];
   patientCount: number = 0;
   constructor(
     private patientService: PatientService,
-    private socketService: SocketService
-  ) {}
+    private socketService: SocketService,
+    private route: Router,
+    private authService: AuthService
+  ) {
+    this.authService.user$.subscribe((data) => (this.token = data));
+  }
   BookAppointmentForm = new FormGroup({
-    startSlot: new FormControl(null, [Validators.required]), // Date & time for start slot
-    endSlot: new FormControl(null, [Validators.required]), // Date & time for end slot
-    doctorId: new FormControl(null, [Validators.required]), // ID of the doctor
+    doctorId: new FormControl(null, [Validators.required]),
+    day: new FormControl(null, [Validators.required]),
+    timeSlot: new FormControl(null, [Validators.required]),
   });
 
   ngOnInit(): void {
@@ -31,11 +38,48 @@ export class AddBookAppointmentComponent implements OnInit, OnDestroy {
       this.patientCount = data.count; // Update the count in the frontend
     });
   }
+
   onSubmit() {
-    this.patientService
-      .bookAppointment(this.BookAppointmentForm.value)
-      .pipe(map((res: any) => res.data))
-      .subscribe((data: any) => (this.appointments = data));
+    if (this.BookAppointmentForm.valid) {
+      this.patientService
+        .bookAppointment(this.BookAppointmentForm.value)
+        .pipe(map((res: any) => res.data))
+        .subscribe(
+          (data: any) => {
+            // Show success alert
+            Swal.fire({
+              title: 'Appointment Booked!',
+              text: `Your appointment has been successfully booked for ${
+                this.BookAppointmentForm.get('day')?.value
+              } during ${this.BookAppointmentForm.get('timeSlot')?.value}.`,
+              icon: 'success',
+              confirmButtonText: 'OK',
+            });
+
+            // Update appointments (if necessary) and reset the form
+            this.appointments = data;
+            this.route.navigate(['/bookAppointment']);
+            this.BookAppointmentForm.reset();
+          },
+          (error: any) => {
+            // Show error alert
+            Swal.fire({
+              title: 'Error!',
+              text: 'Something went wrong while booking the appointment. Please try again later.',
+              icon: 'error',
+              confirmButtonText: 'OK',
+            });
+          }
+        );
+    } else {
+      // Optional: Show validation error if form is invalid
+      Swal.fire({
+        title: 'Invalid Form!',
+        text: 'Please fill out all required fields before submitting.',
+        icon: 'warning',
+        confirmButtonText: 'OK',
+      });
+    }
   }
 
   doctors: Doctor[] = [];

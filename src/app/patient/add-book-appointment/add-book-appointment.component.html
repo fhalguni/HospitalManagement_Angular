@@ -1,36 +1,58 @@
-<form [formGroup]="BookAppointmentForm" (ngSubmit)="onSubmit()">
-  <!-- Start Slot -->
-  <div>
-    <label for="startSlot">Start Slot:</label>
+<form
+  [formGroup]="BookAppointmentForm"
+  (ngSubmit)="onSubmit()"
+  class="form-container"
+>
+  <!-- Day Selection -->
+  <div class="form-group">
+    <label for="day" class="form-label">Select Day:</label>
     <input
-      id="startSlot"
-      type="datetime-local"
-      formControlName="startSlot"
+      id="day"
+      type="date"
+      formControlName="day"
+      class="form-input"
       required
     />
   </div>
 
-  <!-- End Slot -->
-  <div>
-    <label for="endSlot">End Slot:</label>
-    <input
-      id="endSlot"
-      type="datetime-local"
-      formControlName="endSlot"
+  <!-- Time Slot Selection -->
+  <div class="form-group">
+    <label for="timeSlot" class="form-label">Select Time Slot:</label>
+    <select
+      id="timeSlot"
+      formControlName="timeSlot"
+      class="form-select"
       required
-    />
+    >
+      <option value="8-10">8:00 AM - 10:00 AM</option>
+      <option value="11-1">11:00 AM - 1:00 PM</option>
+      <option value="2-4">2:00 PM - 4:00 PM</option>
+    </select>
   </div>
 
   <!-- Doctor ID -->
-  <div>
-    <label for="doctorId">Select Doctor:</label>
-    <select id="doctorId" formControlName="doctorId" required>
+  <div class="form-group">
+    <label for="doctorId" class="form-label">Select Doctor:</label>
+    <select
+      id="doctorId"
+      formControlName="doctorId"
+      class="form-select"
+      required
+    >
       <option *ngFor="let doctor of doctors" [value]="doctor.id">
-        {{ doctor.name }}
+        name:{{ doctor.name }}.... speciality:{{ doctor.speciality }}
       </option>
     </select>
   </div>
 
   <!-- Submit Button -->
-  <button type="submit" [disabled]="BookAppointmentForm.invalid">Submit</button>
+  <div class="form-group">
+    <button
+      type="submit"
+      [disabled]="BookAppointmentForm.invalid"
+      class="btn-submit"
+    >
+      Submit
+    </button>
+  </div>
 </form>

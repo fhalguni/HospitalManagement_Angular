@@ -1,0 +1,95 @@
+<!-- patients-listing.component.html -->
+<div class="patients-container">
+  <h1>Patient Directory</h1>
+  <div class="search-bar">
+    <input
+      type="text"
+      placeholder="Search patients by name or medical history"
+      [(ngModel)]="searchTerm"
+    />
+    <button class="search-button">
+      <span class="material-icons">search</span>
+    </button>
+  </div>
+
+  <div class="patients-grid">
+    <div
+      class="patient-card"
+      [ngClass]="{ inactive: !getPatientsStatus(patient.id) }"
+      *ngFor="let patient of filteredPatients()"
+    >
+      <div class="patient-header">
+        <div class="avatar-placeholder">
+          <span
+            >{{ patient.name.split(" ")[0][0]
+            }}{{
+              patient.name.split(" ")[1] ? patient.name.split(" ")[1][0] : ""
+            }}</span
+          >
+        </div>
+        <div class="patient-basic-info">
+          <h2>{{ patient.name }}</h2>
+          <div class="patient-tags">
+            <span class="tag" *ngIf="patient.gender">{{ patient.gender }}</span>
+            <span class="tag">{{ patient.age }} years</span>
+            <!-- <span class="tag">ID: {{patient.id}}</span> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="patient-details">
+        <div class="details-section">
+          <h3>
+            <span class="material-icons">contact_mail</span>
+            Contact Information
+          </h3>
+          <div class="info-item">
+            <label>Email:</label>
+            <p>{{ patient.email }}</p>
+          </div>
+          <div class="info-item">
+            <label>Address:</label>
+            <p>{{ patient.address || "Not provided" }}</p>
+          </div>
+        </div>
+
+        <div class="details-section">
+          <h3>
+            <span class="material-icons">health_and_safety</span>
+            Medical Information
+          </h3>
+          <div class="info-item">
+            <label>Medical History:</label>
+            <p>{{ patient.medicalHistory || "No medical history recorded" }}</p>
+          </div>
+          <div class="info-item">
+            <label>Current Medication:</label>
+            <p>{{ patient.currentMedication || "No current medications" }}</p>
+          </div>
+          <div class="info-item">
+            <label>Allergies:</label>
+            <p>{{ patient.allergies || "No known allergies" }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="patient-actions">
+        <button
+          class="btn primary"
+          (click)="getAppointmentOfPatients(patient.id)"
+        >
+          <span class="material-icons">event</span>
+          Appointments
+        </button>
+        <button class="btn secondary" (click)="deletePatient(patient.id)">
+          <span class="material-icons">edit</span>
+          {{ patient.isActive ? "Activate" : "Inactive" }}
+        </button>
+        <!-- <button class="btn tertiary">
+          <span class="material-icons">visibility</span>
+          View Records
+        </button> -->
+      </div>
+    </div>
+  </div>
+</div>
