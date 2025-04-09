@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +27,7 @@ export class AdminService {
   }
 
   deleteDoctor(id: number) {
-    return this.http.put(`${this.api}/deleteDoctor/${id}`, id);
+    return this.http.put(`${this.api}/deleteDoctor/${id}`, { id });
   }
 
   createDoctor(data: any) {
@@ -35,5 +36,17 @@ export class AdminService {
 
   getAppointmentOfDoctors(id: number) {
     return this.http.get(`${this.api}/getAppointmentOfDoctor/${id}`);
+  }
+
+  activePatient(id: number) {
+    return this.http.put(`${this.api}/activatePatient/${id}`, { id });
+  }
+
+  getPatientProfile(id: number) {
+    return this.http.get(`${this.api}/getPatient/${id}`);
+  }
+
+  activeDoctor(id: number) {
+    return this.http.put(`${this.api}/activeDoctor/${id}`, { id });
   }
 }

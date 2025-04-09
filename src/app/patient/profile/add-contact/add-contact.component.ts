@@ -28,7 +28,7 @@ export class AddContactComponent {
             icon: 'success',
             confirmButtonText: 'OK',
           });
-          this.route.navigate(['/patient-profile']);
+          this.route.navigate(['/patients/patient-profile']);
         },
         (error) => {
           console.error('Error adding contact', error);

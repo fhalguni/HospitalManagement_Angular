@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PatientService } from '../patient.service';
 import { Doctor } from '../../models/doctor.model';
@@ -7,6 +7,8 @@ import { SocketService } from '../../socket.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
+
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-add-book-appointment',
   standalone: false,
@@ -17,13 +19,14 @@ export class AddBookAppointmentComponent implements OnInit, OnDestroy {
   token!: string | null;
   appointments: any[] = [];
   patientCount: number = 0;
+
   constructor(
     private patientService: PatientService,
     private socketService: SocketService,
     private route: Router,
     private authService: AuthService
   ) {
-    this.authService.user$.subscribe((data) => (this.token = data));
+    this.authService.authState$.subscribe((data) => (this.token = data));
   }
   BookAppointmentForm = new FormGroup({
     doctorId: new FormControl(null, [Validators.required]),
@@ -33,10 +36,11 @@ export class AddBookAppointmentComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getAllDoctors();
-    this.socketService.onEvent('patientCountUpdate', (data) => {
-      console.log('Real-time patient count update:', data);
-      this.patientCount = data.count; // Update the count in the frontend
-    });
+  }
+
+  bookSlot() {
+    this.socketService.getUpdatedCount();
+    this.socketService.onSlotUnavailable();
   }
 
   onSubmit() {
@@ -46,6 +50,14 @@ export class AddBookAppointmentComponent implements OnInit, OnDestroy {
         .pipe(map((res: any) => res.data))
         .subscribe(
           (data: any) => {
+            console.log({ data });
+
+            this.socketService.joinDoctor(
+              data.doctor.id,
+              data.day,
+              data.timeSlot
+            );
+
             // Show success alert
             Swal.fire({
               title: 'Appointment Booked!',
@@ -58,7 +70,7 @@ export class AddBookAppointmentComponent implements OnInit, OnDestroy {
 
             // Update appointments (if necessary) and reset the form
             this.appointments = data;
-            this.route.navigate(['/bookAppointment']);
+            this.route.navigate(['/patients/bookAppointment']);
             this.BookAppointmentForm.reset();
           },
           (error: any) => {

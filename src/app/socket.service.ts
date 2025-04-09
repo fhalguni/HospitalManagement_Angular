@@ -1,27 +1,39 @@
-import { Injectable } from '@angular/core';
-import { io, Socket } from 'socket.io-client';
+import { Injectable, NgZone } from '@angular/core';
+import { Socket } from 'ngx-socket-io';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SocketService {
-  private socket: Socket;
-
-  constructor() {
-    this.socket = io('http://localhost:9000'); // Replace with your server URL
-  }
+  constructor(private socket: Socket, private zone: NgZone) {}
 
   // Listen for events
-  onEvent(eventName: string, callback: (data: any) => void): void {
-    this.socket.on(eventName, callback);
+  joinDoctor(doctorId: number, day: Date, timeSlot: string) {
+    this.socket.connect();
+    this.socket.emit('slotBook', { doctorId, day, timeSlot });
+    console.log('Emitted slotBook event:', { doctorId, day, timeSlot });
+
+    // Subscribe to events after joining the room
+    this.onSlotUnavailable();
+    this.getUpdatedCount();
   }
 
-  // Emit events (if needed)
-  emitEvent(eventName: string, data: any): void {
-    this.socket.emit(eventName, data);
+  onSlotUnavailable() {
+    this.socket.on('slotUnavailable', (data: any) => {
+      this.zone.run(() => {
+        console.log('Slot Unavailable:', data);
+      });
+    });
   }
 
-  // Disconnect socket (if needed)
+  getUpdatedCount() {
+    this.socket.on('patientCountUpdate', (data: any) => {
+      this.zone.run(() => {
+        console.log('Patient Count Updated:', data);
+      });
+    });
+  }
   disconnect(): void {
     this.socket.disconnect();
   }

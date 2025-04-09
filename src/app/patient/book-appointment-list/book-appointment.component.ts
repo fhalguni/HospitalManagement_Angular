@@ -4,6 +4,8 @@ import { Doctor } from '../../models/doctor.model';
 import { map } from 'rxjs';
 import Swal from 'sweetalert2';
 import { AuthService } from '../../auth/auth.service';
+import { Router } from '@angular/router';
+import { Appointment } from '../../models/appointment.model';
 
 @Component({
   selector: 'app-book-appointment',
@@ -14,18 +16,60 @@ import { AuthService } from '../../auth/auth.service';
 export class BookAppointmentComponent {
   token!: string | null;
   appointments: any[] = [];
+  searchItem: string = '';
+  filterAppointment: any[] = [];
   constructor(
     private patientService: PatientService,
-    private authService: AuthService
+    private authService: AuthService,
+    private route: Router
   ) {
-    this.authService.user$.subscribe((data) => (this.token = data));
-    patientService
+    this.authService.authState$.subscribe((data) => (this.token = data));
+    this.isLoaded();
+  }
+
+  isLoaded() {
+    return this.patientService
       .getAllAppointments()
       .pipe(map((res: any) => res.data))
       .subscribe((data) => {
+        console.log(data);
+
         this.appointments = data;
+        this.filterAppointment = this.appointments;
       });
   }
+
+  filter() {
+    if (!this.searchItem) {
+      this.appointments;
+    }
+    const term = this.searchItem.toLowerCase();
+    return this.filterAppointment.filter(
+      (appointment) =>
+        appointment.day.toLowerCase().includes(term) ||
+        appointment.timeSlot.toLowerCase().includes(term) ||
+        appointment.doctor?.name.toLowerCase().includes(term)
+    );
+  }
+  filterAppointments(event: Event) {
+    const selectedValue = (event.target as HTMLSelectElement).value;
+
+    if (selectedValue === 'all') {
+      this.patientService
+        .getAllAppointments()
+        .pipe(map((res: any) => res.data))
+        .subscribe((data) => {
+          this.appointments = data;
+          this.filterAppointment = this.appointments;
+        });
+    } else {
+      this.filterAppointment = this.appointments.filter(
+        (appointment) =>
+          appointment.status.toLowerCase() === selectedValue.toLowerCase()
+      );
+    }
+  }
+
   formatTimeSlot(timeSlot: string): string {
     const slotMapping: { [key: string]: string } = {
       '8-10': '8:00 AM - 10:00 AM',
@@ -45,9 +89,8 @@ export class BookAppointmentComponent {
           'Cancelled!',
           'Your appointment has been cancelled.',
           'success'
-        ).then(() => {
-          window.location.reload();
-        });
+        );
+        this.isLoaded();
       },
 
       (error) => {

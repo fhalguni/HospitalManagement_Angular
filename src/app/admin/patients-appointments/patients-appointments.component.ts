@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../admin.service';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
@@ -9,12 +9,13 @@ import { map } from 'rxjs';
   templateUrl: './patients-appointments.component.html',
   styleUrl: './patients-appointments.component.css',
 })
-export class PatientsAppointmentsComponent {
+export class PatientsAppointmentsComponent implements OnInit {
   appointments: any[] = [];
   constructor(
     private adminService: AdminService,
     private router: ActivatedRoute
-  ) {
+  ) {}
+  ngOnInit(): void {
     const id = Number(this.router.snapshot.paramMap.get('id')!);
     this.adminService
       .getAllAppointmentOfPatient(id)

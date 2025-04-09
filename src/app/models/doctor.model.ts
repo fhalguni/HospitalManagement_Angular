@@ -3,5 +3,6 @@ export interface Doctor {
   name: string;
   speciality: string;
   email: string;
+  isActive: boolean;
   password: string;
 }

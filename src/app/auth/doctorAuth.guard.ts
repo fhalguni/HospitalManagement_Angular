@@ -10,6 +10,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class DoctorAuthGuard implements CanActivate {
+  role!: string | null;
   constructor(private authService: AuthService) {}
   canActivate(
     route: ActivatedRouteSnapshot,

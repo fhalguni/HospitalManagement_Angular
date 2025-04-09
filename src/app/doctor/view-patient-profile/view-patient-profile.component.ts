@@ -13,6 +13,18 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ViewPatientProfileComponent {
   patient!: Patient;
+  // ngOnInit(): void {
+  //   // Fetch the token from the network
+  //   this.doctorService.getBearerToken().subscribe({
+  //     next: (response) => {
+  //       const token = response.accessToken; // Replace with actual response field
+  //       this.tokenService.updateToken(token); // Update the token in the service
+  //     },
+  //     error: (error) => {
+  //       console.error('Error fetching token:', error);
+  //     },
+  //   });
+  // }
   constructor(
     private patientService: PatientService,
     private doctorService: DoctorService,
@@ -26,6 +38,8 @@ export class ViewPatientProfileComponent {
       .pipe(map((res: any) => res.data))
       .subscribe((data) => {
         this.patient = data;
+        console.log(data);
+
         // this.route.navigate(['/viewProfile', id]);
       });
   }

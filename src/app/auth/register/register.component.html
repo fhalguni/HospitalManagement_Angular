@@ -1,97 +1,255 @@
-<div class="container">
-  <!-- Title section -->
-  <div class="title">Registration</div>
-  <div class="content">
-    <!-- Registration form -->
-    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
-      <div class="user-details">
-        <!-- Input for Full Name -->
-        <div class="input-box">
-          <span class="details">Name</span>
-          <input
-            type="text"
-            formControlName="name"
-            placeholder="Enter your name"
-            required
-          />
-        </div>
-        <!-- Input for Email -->
-        <div class="input-box">
-          <span class="details">Email</span>
-          <input
-            type="email"
-            formControlName="email"
-            placeholder="Enter your email"
-            required
-          />
-        </div>
-        <!-- Input for Password -->
-        <div class="input-box">
-          <span class="details">Password</span>
-          <input
-            type="password"
-            formControlName="password"
-            placeholder="Enter your password"
-            required
-          />
-        </div>
-        <div class="input-box">
-          <span class="details">Confirm Password</span>
-          <input
-            type="password"
-            formControlName="confirmPassword"
-            placeholder="Enter your password"
-            required
-          />
-        </div>
-        <!-- Input for Age -->
-        <div class="input-box">
-          <span class="details">Age</span>
-          <input
-            type="number"
-            formControlName="age"
-            placeholder="Enter your age"
-            required
-          />
-        </div>
-        <!-- Gender selection -->
-        <div class="gender-details">
-          <span class="gender-title">Gender</span>
-          <div class="input-box">
-            <select formControlName="gender" required>
-              <option value="" disabled selected>Select your gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-        </div>
+<div class="register-container">
+  <h2>Patient Registration</h2>
 
-        <!-- Input for Emergency Contact Name -->
-        <div class="input-box">
-          <span class="details">Emergency Contact Name</span>
-          <input
-            type="text"
-            formControlName="EmergencyContactName"
-            placeholder="Enter emergency contact name"
-            required
-          />
-        </div>
-        <!-- Input for Emergency Contact Number -->
-        <div class="input-box">
-          <span class="details">Emergency Contact Number</span>
-          <input
-            type="tel"
-            formControlName="EmergencyContactNumber"
-            placeholder="Enter emergency contact number"
-            required
-          />
-        </div>
+  <form
+    [formGroup]="registrationForm"
+    (ngSubmit)="onSubmit()"
+    class="registration-form"
+  >
+    <!-- Name Field -->
+    <div class="form-field">
+      <label for="name">Full Name</label>
+      <input
+        type="text"
+        id="name"
+        formControlName="name"
+        placeholder="Enter your full name"
+      />
+      <div
+        class="error-message"
+        *ngIf="nameControl?.touched && nameControl?.invalid"
+      >
+        <span *ngIf="nameControl?.errors?.['required']">Name is required</span>
+        <span *ngIf="nameControl?.errors?.['minlength']"
+          >Name must be at least 2 characters</span
+        >
+        <span *ngIf="nameControl?.errors?.['maxlength']"
+          >Name cannot exceed 50 characters</span
+        >
       </div>
-      <!-- Submit button -->
-      <div class="button">
-        <input type="submit" value="Register" />
+    </div>
+
+    <!-- Email Field -->
+    <div class="form-field">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        formControlName="email"
+        placeholder="Enter your email"
+      />
+      <div
+        class="error-message"
+        *ngIf="emailControl?.touched && emailControl?.invalid"
+      >
+        <span *ngIf="emailControl?.errors?.['required']"
+          >Email is required</span
+        >
+        <span *ngIf="emailControl?.errors?.['email']"
+          >Please enter a valid email address</span
+        >
       </div>
-    </form>
-  </div>
+    </div>
+
+    <!-- Password Field -->
+    <div class="form-field">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        formControlName="password"
+        placeholder="Enter password"
+      />
+      <div
+        class="error-message"
+        *ngIf="passwordControl?.touched && passwordControl?.invalid"
+      >
+        <span *ngIf="passwordControl?.errors?.['required']"
+          >Password is required</span
+        >
+        <span *ngIf="passwordControl?.errors?.['minlength']"
+          >Password must be at least 6 characters</span
+        >
+        <span *ngIf="passwordControl?.errors?.['maxlength']"
+          >Password cannot exceed 20 characters</span
+        >
+      </div>
+    </div>
+
+    <!-- Confirm Password Field -->
+    <div class="form-field">
+      <label for="confirmPassword">Confirm Password</label>
+      <input
+        type="password"
+        id="confirmPassword"
+        formControlName="confirmPassword"
+        placeholder="Confirm your password"
+      />
+      <div
+        class="error-message"
+        *ngIf="confirmPasswordControl?.touched && (confirmPasswordControl?.invalid || registrationForm.errors?.['passwordMismatch'])"
+      >
+        <span *ngIf="confirmPasswordControl?.errors?.['required']"
+          >Please confirm your password</span
+        >
+        <span *ngIf="registrationForm.errors?.['passwordMismatch']"
+          >Passwords do not match</span
+        >
+      </div>
+    </div>
+
+    <!-- Age Field -->
+    <div class="form-field">
+      <label for="age">Age</label>
+      <input
+        type="number"
+        id="age"
+        formControlName="age"
+        placeholder="Enter your age"
+      />
+      <div
+        class="error-message"
+        *ngIf="ageControl?.touched && ageControl?.invalid"
+      >
+        <span *ngIf="ageControl?.errors?.['required']">Age is required</span>
+        <span *ngIf="ageControl?.errors?.['min']"
+          >Age must be a positive number</span
+        >
+        <span *ngIf="ageControl?.errors?.['pattern']"
+          >Age must be a number</span
+        >
+      </div>
+    </div>
+
+    <!-- Gender Field -->
+    <div class="form-field">
+      <label for="gender">Gender</label>
+      <select id="gender" formControlName="gender">
+        <option value="" disabled selected>Select gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+      <div
+        class="error-message"
+        *ngIf="genderControl?.touched && genderControl?.invalid"
+      >
+        <span *ngIf="genderControl?.errors?.['required']"
+          >Gender is required</span
+        >
+        <span *ngIf="genderControl?.errors?.['invalidGender']"
+          >Please select a valid gender</span
+        >
+      </div>
+    </div>
+
+    <!-- Address Field (Optional)
+    <div class="form-field">
+      <label for="address">Address (Optional)</label>
+      <textarea
+        id="address"
+        formControlName="address"
+        placeholder="Enter your address"
+      ></textarea>
+      <div
+        class="error-message"
+        *ngIf="addressControl?.touched && addressControl?.invalid"
+      >
+        <span *ngIf="addressControl?.errors?.['maxlength']"
+          >Address cannot exceed 100 characters</span
+        >
+      </div>
+    </div>
+
+     Medical History Field (Optional) 
+    <div class="form-field">
+      <label for="medicalHistory">Medical History (Optional)</label>
+      <textarea
+        id="medicalHistory"
+        formControlName="medicalHistory"
+        placeholder="Enter any relevant medical history"
+      ></textarea>
+    </div>
+
+     Current Medication Field (Optional) 
+    <div class="form-field">
+      <label for="currentMedication">Current Medication (Optional)</label>
+      <textarea
+        id="currentMedication"
+        formControlName="currentMedication"
+        placeholder="List your current medications"
+      ></textarea>
+    </div>
+
+     Allergies Field (Optional) 
+    <div class="form-field">
+      <label for="allergies">Allergies (Optional)</label>
+      <textarea
+        id="allergies"
+        formControlName="allergies"
+        placeholder="List any allergies"
+      ></textarea>
+    </div> -->
+
+    <!-- Emergency Contact Name Field -->
+    <div class="form-field">
+      <label for="EmergencyContactName">Emergency Contact Name</label>
+      <input
+        type="text"
+        id="EmergencyContactName"
+        formControlName="EmergencyContactName"
+        placeholder="Emergency contact name"
+      />
+      <div
+        class="error-message"
+        *ngIf="
+          emergencyContactNameControl?.touched &&
+          emergencyContactNameControl?.invalid
+        "
+      >
+        <span *ngIf="emergencyContactNameControl?.errors?.['required']"
+          >Emergency contact name is required</span
+        >
+      </div>
+    </div>
+
+    <!-- Emergency Contact Number Field -->
+    <div class="form-field">
+      <label for="EmergencyContactNumber">Emergency Contact Number</label>
+      <input
+        type="tel"
+        id="EmergencyContactNumber"
+        formControlName="EmergencyContactNumber"
+        placeholder="10-digit phone number"
+      />
+      <div
+        class="error-message"
+        *ngIf="
+          emergencyContactNumberControl?.touched &&
+          emergencyContactNumberControl?.invalid
+        "
+      >
+        <span *ngIf="emergencyContactNumberControl?.errors?.['required']"
+          >Emergency contact number is required</span
+        >
+        <span *ngIf="emergencyContactNumberControl?.errors?.['pattern']"
+          >Please enter a valid 10-digit phone number</span
+        >
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      class="register-button"
+      [disabled]="registrationForm.invalid"
+    >
+      Register
+    </button>
+
+    <!-- Login Link -->
+    <div class="login-link">
+      Already have an account? <a routerLink="/login">Login here</a>
+    </div>
+  </form>
 </div>

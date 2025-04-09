@@ -1,0 +1,128 @@
+<!-- patient-profile.component.html -->
+<div class="profile-container">
+  <div class="profile-header">
+    <div class="profile-avatar">
+      <div class="avatar-placeholder">
+        <!-- <span>{{ patient.name }}</span> -->
+      </div>
+    </div>
+    <div *ngIf="doctor">
+      <h1>{{ doctor.name }}</h1>
+      <div class="profile-tags">
+        <span class="tag">{{ doctor.gender }}</span>
+        <span class="tag">{{ doctor.speciality }} </span>
+      </div>
+    </div>
+    <div class="actions">
+      <app-shared-button
+        [btnTitle]="'Update Password'"
+        [btnStyle]="'btn primary'"
+        (send)="showDialogBox()"
+      ></app-shared-button>
+    </div>
+  </div>
+
+  <div class="profile-body">
+    <div class="profile-section">
+      <div class="section-header">
+        <h2>Personal Information</h2>
+        <span class="material-icons">doctor</span>
+      </div>
+      <div class="section-content" *ngIf="doctor">
+        <div class="info-item">
+          <label>Degree</label>
+          <p>{{ doctor.degree }}</p>
+        </div>
+        <div class="info-item">
+          <label>Email</label>
+          <p>{{ doctor.email }}</p>
+        </div>
+        <!-- <div class="info-item">
+            <label>Age</label>
+            <p>{{ doctor.age }} years</p>
+          </div> -->
+        <div class="info-item">
+          <label>Gender</label>
+          <p>{{ doctor.gender }}</p>
+        </div>
+        <!-- <div class="info-item">
+            <label>Address</label>
+            <p>{{ patient.address || "Not provided" }}</p>
+          </div> -->
+      </div>
+    </div>
+
+    <!-- <router-outlet></router-outlet> -->
+
+    <div class="password-dialog-overlay" *ngIf="showPasswordDialog">
+      <div class="password-dialog">
+        <div class="dialog-header">
+          <h3>Update Password</h3>
+          <button class="close-button" (click)="closePasswordDialog()">
+            ×
+          </button>
+        </div>
+        <div class="dialog-content">
+          <form [formGroup]="passwordForm" (ngSubmit)="updatePassword()">
+            <div class="form-group">
+              <label for="password">New Password</label>
+              <input
+                type="password"
+                id="password"
+                formControlName="password"
+                class="form-control"
+                placeholder="Enter new password"
+              />
+              <div
+                class="error-message"
+                *ngIf="
+                  passwordForm.get('password')?.invalid &&
+                  passwordForm.get('password')?.touched
+                "
+              >
+                Password must be at least 8 characters
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="confirmPassword">Confirm Password</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                formControlName="confirmPassword"
+                class="form-control"
+                placeholder="Confirm new password"
+              />
+              <div
+                class="error-message"
+                *ngIf="passwordForm.errors?.['passwordMismatch'] && passwordForm.get('confirmPassword')?.touched"
+              >
+                Passwords don't match
+              </div>
+            </div>
+
+            <div class="dialog-actions">
+              <button
+                type="button"
+                class="btn secondary"
+                (click)="closePasswordDialog()"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="btn primary"
+                [disabled]="passwordForm.invalid"
+                (click)="updatePassword()"
+              >
+                Update
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

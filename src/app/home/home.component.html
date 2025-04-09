@@ -1,18 +1,294 @@
-<div class="home-page">
-  <h1>Welcome to the Dashboard</h1>
-  <p>
-    This is your one-stop solution to manage patients and doctors efficiently.
-  </p>
-  <div class="card-container">
-    <div class="card">
-      <h2>Patients</h2>
-      <p>Manage patient records, appointments, and more.</p>
-      <a routerLink="patients" class="btn">Go to Patients</a>
+<!-- <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediSchedule - Healthcare Appointment System</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script> -->
+<!-- 
+<header>
+  <div class="container header-container">
+    <a href="#" class="logo">
+      <i class="fas fa-calendar-check"></i>
+      MediSchedule
+    </a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Features</a></li>
+        <li><a href="#">How It Works</a></li>
+        <li><a href="#">Testimonials</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="nav-buttons">
+      <a href="#" class="btn btn-secondary">Login</a>
+      <a href="#" class="btn btn-primary">Book Appointment</a>
     </div>
-    <div class="card">
-      <h2>Doctors</h2>
-      <p>Access doctor profiles, schedules, and other details.</p>
-      <a routerLink="doctors" class="btn">Go to Doctors</a>
-    </div>
+    <button class="mobile-menu-btn">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+</header> -->
+<div class="nav-bar">
+  <a href="#" class="nav-brand"> <i class="icon">🏥</i> MediCare </a>
+  <div class="nav-links">
+    <a routerLink="/home" class="nav-link" routerLinkActive="active">Home</a>
+    <a (click)="register()" class="nav-link" routerLinkActive="active"
+      >Register</a
+    >
+    <a routerLink="/login" style="cursor: pointer" class="nav-link">Log In</a>
   </div>
 </div>
+
+<section class="hero">
+  <div class="container hero-container">
+    <div class="hero-content">
+      <div class="hero-tagline">
+        <i class="fas fa-check-circle"></i>
+        Easy Online Appointment Booking
+      </div>
+      <h1>Schedule Your <span>Healthcare Appointments</span> With Ease</h1>
+      <p>
+        Book appointments with your healthcare provider anytime, anywhere.
+        MediSchedule offers a seamless, intuitive platform to manage all your
+        healthcare visits in one place.
+      </p>
+      <div class="hero-buttons">
+        <a class="btn btn-primary" routerLink="/login">Book Now</a>
+        <a href="#" class="btn btn-secondary">Learn More</a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img
+        src="https://schedule.cc/images/appointment-scheduling-solution-screenshot-1.png?v=1658930121841629244"
+        alt="Healthcare Appointment Scheduling"
+      />
+      <!-- <div class="appointment-card">
+        <h3><i class="fas fa-check-circle"></i> Appointment Confirmed</h3>
+        <div class="appointment-details">
+          <div class="appointment-item">
+            <div class="appointment-icon">
+              <i class="fas fa-user-md"></i>
+            </div>
+            <div class="appointment-text">
+              <h4>Dr. Sarah Johnson</h4>
+              <p>Cardiologist</p>
+            </div>
+          </div>
+          <div class="appointment-item">
+            <div class="appointment-icon">
+              <i class="fas fa-calendar"></i>
+            </div>
+            <div class="appointment-text">
+              <h4>Mon, Apr. 12, 2025</h4>
+              <p>10:00 - 10:30 AM</p>
+            </div>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-subtitle">Features</div>
+      <h2 class="section-title">Simplify Your Healthcare Experience</h2>
+      <p class="section-description">
+        MediSchedule provides all the tools you need to manage your healthcare
+        appointments efficiently and conveniently.
+      </p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-calendar-alt"></i>
+        </div>
+        <h3>Easy Booking</h3>
+        <p>
+          Schedule appointments with your preferred healthcare providers in just
+          a few clicks, 24/7.
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-bell"></i>
+        </div>
+        <h3>Appointment Reminders</h3>
+        <p>
+          Receive timely notifications via email and SMS to ensure you never
+          miss an appointment.
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-sync-alt"></i>
+        </div>
+        <h3>Easy Rescheduling</h3>
+        <p>
+          Need to change your appointment? Reschedule with ease without phone
+          calls or lengthy processes.
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-file-medical"></i>
+        </div>
+        <h3>Medical History</h3>
+        <p>
+          Access and update your medical history information securely before
+          appointments.
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-user-friends"></i>
+        </div>
+        <h3>Family Management</h3>
+        <p>
+          Manage appointments for yourself and your family members from a single
+          account.
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-video"></i>
+        </div>
+        <h3>Telehealth Integration</h3>
+        <p>
+          Seamlessly connect to virtual consultations directly through our
+          platform.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="how-it-works">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-subtitle">Simple Process</div>
+      <h2 class="section-title">How MediSchedule Works</h2>
+      <p class="section-description">
+        Booking your healthcare appointments has never been easier with our
+        simple four-step process.
+      </p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <h3>Create Account</h3>
+        <p>
+          Sign up in minutes with just your basic information and preferences.
+        </p>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <h3>Find Provider</h3>
+        <p>
+          Search for specialists by specialty, location, or insurance
+          acceptance.
+        </p>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <h3>Select Time Slot</h3>
+        <p>Choose from available time slots that fit your schedule.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">4</div>
+        <h3>Confirm Booking</h3>
+        <p>
+          Receive instant confirmation and add to your calendar automatically.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-subtitle">Testimonials</div>
+      <h2 class="section-title">What Our Users Say</h2>
+      <p class="section-description">
+        Thousands of patients and healthcare providers trust MediSchedule for
+        their appointment management needs.
+      </p>
+    </div>
+    <div class="testimonials-slider">
+      <div class="testimonial-card">
+        <div class="testimonial-stars">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+        </div>
+        <div class="testimonial-text">
+          <p>
+            MediSchedule has transformed how I manage my medical appointments.
+            No more waiting on hold to schedule visits! The reminders have been
+            a lifesaver for my busy schedule.
+          </p>
+        </div>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">
+            <img src="/api/placeholder/60/60" alt="Rebecca Wilson" />
+          </div>
+          <div class="testimonial-info">
+            <h4>Rebecca Wilson</h4>
+            <p>Patient</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container">
+    <h2>Start Managing Your Healthcare Appointments Today</h2>
+    <p>
+      Join thousands of satisfied users who have simplified their healthcare
+      experience with MediSchedule.
+    </p>
+    <div class="cta-buttons">
+      <a href="#" class="btn btn-white">Create Free Account</a>
+      <a href="#" class="btn btn-outline-white">Contact Sales</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-column footer-about">
+        <h3>MediSchedule</h3>
+        <p>
+          MediSchedule is an innovative healthcare appointment management system
+          designed to streamline the booking process for both patients and
+          providers.
+        </p>
+        <div class="social-links">
+          <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      <div class="footer-column">
+        <h3>Company</h3>
+        <ul class="footer-links">
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Our Team</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3></h3>
+      </div>
+    </div>
+  </div>
+</footer>

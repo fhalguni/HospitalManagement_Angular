@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { DoctorService } from '../doctor.service';
 import { Appointment } from '../../models/appointment.model';
-import { map } from 'rxjs';
+import { debounceTime, map } from 'rxjs';
 import Swal from 'sweetalert2';
 import { ActivatedRoute, Router } from '@angular/router';
 @Component({
@@ -13,18 +13,54 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ManageAppointmentsComponent {
   searchTerm: string = '';
   appointments: any[] = [];
+  filterAppointment: any[] = [];
+
   constructor(
     private doctorService: DoctorService,
     private route: Router,
     private router: ActivatedRoute
   ) {
-    this.doctorService
+    this.isLoaded();
+  }
+
+  isLoaded() {
+    return this.doctorService
       .getAllAppointments()
       .pipe(map((res: any) => res.data))
       .subscribe((data) => {
         this.appointments = data;
-        console.log(data);
+        this.filterAppointment = this.appointments;
       });
+  }
+  filter() {
+    if (!this.searchTerm) {
+      this.appointments;
+    }
+    const term = this.searchTerm.toLowerCase();
+    return this.filterAppointment.filter(
+      (appointment) =>
+        appointment.day.toLowerCase().includes(term) ||
+        appointment.timeSlot.toLowerCase().includes(term) ||
+        appointment.patient?.name.toLowerCase().includes(term)
+    );
+  }
+  filterAppointments(event: Event) {
+    const selectedValue = (event.target as HTMLSelectElement).value;
+
+    if (selectedValue === 'all') {
+      this.doctorService
+        .getAllAppointments()
+        .pipe(map((res: any) => res.data))
+        .subscribe((data) => {
+          this.appointments = data;
+          this.filterAppointment = this.appointments;
+        });
+    } else {
+      this.filterAppointment = this.appointments.filter(
+        (appointment) =>
+          appointment.status.toLowerCase() === selectedValue.toLowerCase()
+      );
+    }
   }
   formatTimeSlot(timeSlot: string): string {
     const slotMapping: { [key: string]: string } = {
@@ -35,17 +71,6 @@ export class ManageAppointmentsComponent {
 
     return slotMapping[timeSlot] || timeSlot;
   }
-
-  // filteredPatients(): Appointment[] {
-  //   if (!this.searchTerm) {
-  //     return this.appointments;
-  //   }
-
-  //   const term = this.searchTerm.toLowerCase();
-  //   return this.appointments.filter((appointment) =>
-  //     appointment.name.toLowerCase().includes(term)
-  //   );
-  // }
 
   rejectAppointment(appointmentId: number) {
     this.doctorService.rejectAppointment(appointmentId).subscribe(
@@ -67,6 +92,7 @@ export class ManageAppointmentsComponent {
           ),
           1
         );
+        this.isLoaded();
       },
       (err) => {
         console.error('Error rejecting appointment', err);
@@ -82,29 +108,34 @@ export class ManageAppointmentsComponent {
   }
 
   confirmAppointment(appointmentId: number) {
-    this.doctorService.confirmAppointment(appointmentId).subscribe(
-      (data) => {
-        console.log('Appointment confirmed:', data);
+    this.doctorService
+      .confirmAppointment(appointmentId)
+      .pipe(debounceTime(5000))
+      .subscribe(
+        (data) => {
+          console.log('Appointment confirmed:', data);
 
-        // Display success alert
-        Swal.fire({
-          icon: 'success',
-          title: 'Appointment Confirmed',
-          text: 'The appointment has been successfully confirmed.',
-          confirmButtonText: 'OK',
-        });
-      },
-      (error) => {
-        console.error('Error confirming appointment:', error);
+          // Display success alert
+          Swal.fire({
+            icon: 'success',
+            title: 'Appointment Confirmed',
+            text: 'The appointment has been successfully confirmed.',
+            confirmButtonText: 'OK',
+          });
+          this.isLoaded();
+        },
 
-        // Display error alert
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops!',
-          text: 'Something went wrong while confirming the appointment. Please try again later.',
-          confirmButtonText: 'OK',
-        });
-      }
-    );
+        (error) => {
+          console.error('Error confirming appointment:', error);
+
+          // Display error alert
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops!',
+            text: 'Something went wrong while confirming the appointment. Please try again later.',
+            confirmButtonText: 'OK',
+          });
+        }
+      );
   }
 }

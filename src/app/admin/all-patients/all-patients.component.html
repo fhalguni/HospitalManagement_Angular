@@ -1,10 +1,10 @@
-<!-- patients-listing.component.html -->
+<!-- simplified-patients-listing.component.html -->
 <div class="patients-container">
   <h1>Patient Directory</h1>
   <div class="search-bar">
     <input
       type="text"
-      placeholder="Search patients by name or medical history"
+      placeholder="Search patients by name or email"
       [(ngModel)]="searchTerm"
     />
     <button class="search-button">
@@ -28,67 +28,37 @@
           >
         </div>
         <div class="patient-basic-info">
-          <h2>{{ patient.name }}</h2>
-          <div class="patient-tags">
-            <span class="tag" *ngIf="patient.gender">{{ patient.gender }}</span>
-            <span class="tag">{{ patient.age }} years</span>
-            <!-- <span class="tag">ID: {{patient.id}}</span> -->
-          </div>
-        </div>
-      </div>
-
-      <div class="patient-details">
-        <div class="details-section">
-          <h3>
-            <span class="material-icons">contact_mail</span>
-            Contact Information
-          </h3>
-          <div class="info-item">
-            <label>Email:</label>
-            <p>{{ patient.email }}</p>
-          </div>
-          <div class="info-item">
-            <label>Address:</label>
-            <p>{{ patient.address || "Not provided" }}</p>
-          </div>
-        </div>
-
-        <div class="details-section">
-          <h3>
-            <span class="material-icons">health_and_safety</span>
-            Medical Information
-          </h3>
-          <div class="info-item">
-            <label>Medical History:</label>
-            <p>{{ patient.medicalHistory || "No medical history recorded" }}</p>
-          </div>
-          <div class="info-item">
-            <label>Current Medication:</label>
-            <p>{{ patient.currentMedication || "No current medications" }}</p>
-          </div>
-          <div class="info-item">
-            <label>Allergies:</label>
-            <p>{{ patient.allergies || "No known allergies" }}</p>
-          </div>
+          <h2
+            [routerLink]="['/admin/viewProfile', patient.id]"
+            style="cursor: pointer"
+          >
+            {{ patient.name }}
+          </h2>
+          <p class="patient-email">{{ patient.email }}</p>
         </div>
       </div>
 
       <div class="patient-actions">
         <button
-          class="btn primary"
+          class="btn status-btn"
+          [ngClass]="{
+            'active-btn': patient.isActive,
+            'inactive-btn': !patient.isActive
+          }"
+          (click)="activePatient(patient.id)"
+        >
+          <span class="material-icons">{{
+            patient.isActive ? "check_circle" : "cancel"
+          }}</span>
+          {{ patient.isActive ? "Active" : "Inactive" }}
+        </button>
+
+        <button
+          class="btn status-btn"
           (click)="getAppointmentOfPatients(patient.id)"
         >
-          <span class="material-icons">event</span>
           Appointments
         </button>
-        <button class="btn secondary" (click)="deletePatient(patient.id)">
-          <span class="material-icons">edit</span>
-          {{ patient.isActive ? "Activate" : "Inactive" }}
-        </button>
-        <!-- <button class="btn tertiary">
-          <span class="material-icons">visibility</span>
-          View Records
-        </button> -->
       </div>
     </div>
   </div>

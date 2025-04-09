@@ -1,0 +1,27 @@
+<div class="sidebar-container">
+  <div class="sidebar">
+    <h3>Patient Portal</h3>
+    <ul>
+      <li>
+        <a routerLink="/patients/addBookAppointment" routerLinkActive="active">
+          <i class="fa fa-calendar-plus"></i> Book Appointment
+        </a>
+      </li>
+      <li>
+        <a routerLink="/patients/bookAppointment" routerLinkActive="active">
+          <i class="fa fa-calendar-check"></i> My Appointments
+        </a>
+      </li>
+      <li>
+        <a routerLink="/patients/patient-profile" routerLinkActive="active">
+          <i class="fa fa-calendar-check"></i> My Profile
+        </a>
+      </li>
+
+      <button (click)="logOut()">LogOut</button>
+    </ul>
+  </div>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

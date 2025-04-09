@@ -1,0 +1,21 @@
+<div class="sidebar-container">
+  <div class="sidebar">
+    <h3>Doctor Portal</h3>
+    <ul>
+      <li>
+        <a routerLink="/doctors/manageAppointment" routerLinkActive="active">
+          <i class="fa fa-calendar-plus"></i>Manage Appointments
+        </a>
+      </li>
+      <li>
+        <a routerLink="/doctors/view-profile" routerLinkActive="active">
+          <i class="fa fa-calendar-check"></i> Profile
+        </a>
+      </li>
+      <button (click)="logOut()">LogOut</button>
+    </ul>
+  </div>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

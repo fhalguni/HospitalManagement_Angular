@@ -32,7 +32,7 @@ export class EditProfileComponent {
           icon: 'success',
           confirmButtonText: 'OK',
         });
-        this.route.navigate(['/patient-profile']);
+        this.route.navigate(['/patients/patient-profile']);
       },
       (err) => {
         console.error('Error editing profile:', err);

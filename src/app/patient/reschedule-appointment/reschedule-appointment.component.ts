@@ -7,6 +7,7 @@ import { Appointment } from '../../models/appointment.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { map } from 'rxjs';
 import Swal from 'sweetalert2';
+import { AuthService } from '../../auth/auth.service';
 @Component({
   selector: 'app-reschedule-appointment',
   standalone: false,
@@ -15,12 +16,16 @@ import Swal from 'sweetalert2';
 })
 export class RescheduleAppointmentComponent implements OnInit {
   doctors: Doctor[] = [];
-
+  role!: string | null;
   constructor(
     private patientService: PatientService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
+    this.authService.authState$.subscribe((role) => {
+      this.role = role;
+    });
     const appointmentId = Number(this.route.snapshot.paramMap.get('id'));
   }
   BookAppointmentForm = new FormGroup({
@@ -60,7 +65,7 @@ export class RescheduleAppointmentComponent implements OnInit {
             text: 'Your appointment has been successfully rescheduled.',
             confirmButtonText: 'OK',
           });
-          this.router.navigate(['/bookAppointment']);
+          this.router.navigate(['/patients/bookAppointment']);
         },
         (err) => {
           console.error('API Error:', err); // Debug error response

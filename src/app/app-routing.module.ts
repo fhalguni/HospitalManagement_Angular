@@ -6,10 +6,12 @@ import { BookAppointmentComponent } from './patient/book-appointment-list/book-a
 import { authGuard } from './auth/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { RouteProtectionGuard } from './auth/route-protection.guard';
+import { DoctorAuthGuard } from './auth/doctorAuth.guard';
 
 const routes: Routes = [
   {
     path: 'register',
+    canActivate: [RouteProtectionGuard],
     component: RegisterComponent,
   },
   {
@@ -23,7 +25,7 @@ const routes: Routes = [
     component: BookAppointmentComponent,
   },
   {
-    path: 'home',
+    path: '',
     component: HomeComponent,
   },
   {

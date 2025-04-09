@@ -4,11 +4,11 @@
 
   <div class="table-filters">
     <div class="filter-item">
-      <select class="filter-select">
+      <select class="filter-select" (click)="filterAppointments($event)">
         <option value="all">All Appointments</option>
         <option value="pending">Pending</option>
-        <option value="confirmed">Confirmed</option>
-        <option value="rejected">Rejected</option>
+        <option value="Confirmed">Confirmed</option>
+        <option value="Cancelled">Cancelled</option>
       </select>
     </div>
     <div class="search-box">
@@ -34,13 +34,13 @@
       </thead>
       <tbody>
         <tr
-          *ngFor="let item of appointments"
+          *ngFor="let item of filter()"
           [attr.data-status]="item.status.toLowerCase()"
         >
           <td
             style="cursor: pointer"
             data-label="Patient"
-            [routerLink]="['/viewProfile', item.id]"
+            [routerLink]="['/doctors/viewProfile', item.patient?.id]"
           >
             {{ item.patient?.name }},
           </td>
@@ -54,7 +54,7 @@
               class="btn-cancel"
               (click)="rejectAppointment(item.id)"
               [disabled]="
-                item.status === 'Rejected' || item.status === 'Cancelled'
+                item.status === 'Rejected' || item.status === 'Confirmed'
               "
             >
               <span class="btn-icon">✕</span> Reject

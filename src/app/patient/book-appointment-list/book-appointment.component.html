@@ -1,18 +1,21 @@
-<!-- appointment-list.component.html -->
 <div class="table-container-right">
   <h2 class="table-title">Your Appointments</h2>
 
   <div class="table-filters">
     <div class="filter-item">
-      <select class="filter-select">
+      <select class="filter-select" (change)="filterAppointments($event)">
         <option value="all">All Appointments</option>
-        <option value="upcoming">Upcoming</option>
-        <option value="past">Past</option>
+        <option value="pending">pending</option>
+        <option value="confirmed">confirmed</option>
         <option value="cancelled">Cancelled</option>
       </select>
     </div>
     <div class="search-box">
-      <input type="text" placeholder="Search appointments..." />
+      <input
+        [(ngModel)]="searchItem"
+        type="text"
+        placeholder="Search appointments..."
+      />
       <span class="search-icon">🔍</span>
     </div>
   </div>
@@ -30,7 +33,7 @@
       </thead>
       <tbody>
         <tr
-          *ngFor="let item of appointments"
+          *ngFor="let item of filter()"
           [attr.data-status]="item.status.toLowerCase()"
         >
           <td data-label="Doctor">{{ item.doctor?.name }}</td>
@@ -51,7 +54,7 @@
           <td data-label="Action">
             <button
               class="btn-update"
-              [routerLink]="['/reshedule', item.id]"
+              [routerLink]="['/patients/reshedule', item.id]"
               [disabled]="item.status === 'Confirmed'"
             >
               <span class="btn-icon">↻</span> Reschedule
@@ -62,17 +65,15 @@
     </table>
   </div>
 
-  <!-- Empty state for when there are no appointments -->
   <div class="empty-state" *ngIf="appointments.length === 0">
     <div class="empty-icon">📅</div>
     <h3>No Appointments Found</h3>
     <p>You don't have any appointments scheduled right now.</p>
-    <button class="btn-primary" routerLink="/addBookAppointment">
+    <button class="btn-primary" routerLink="/patients/addBookAppointment">
       Book New Appointment
     </button>
   </div>
 
-  <!-- Pagination -->
   <div class="pagination" *ngIf="appointments.length > 0">
     <button class="page-btn">&laquo;</button>
     <button class="page-btn active">1</button>

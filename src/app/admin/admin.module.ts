@@ -8,13 +8,17 @@ import { AllPatientsComponent } from './all-patients/all-patients.component';
 import { PatientsAppointmentsComponent } from './patients-appointments/patients-appointments.component';
 import { AddDoctorComponent } from './add-doctor/add-doctor.component';
 import { DoctorAppointmentsComponent } from './doctor-appointments/doctor-appointments.component';
+import { AdminComponent } from './admin.component';
+import { AllDoctorsComponent } from './all-doctors/all-doctors.component';
 
 @NgModule({
   declarations: [
     AllPatientsComponent,
     PatientsAppointmentsComponent,
     AddDoctorComponent,
-    DoctorAppointmentsComponent
+    DoctorAppointmentsComponent,
+    AdminComponent,
+    AllDoctorsComponent,
   ],
   imports: [CommonModule, AdminRoutingModule, FormsModule, ReactiveFormsModule],
 

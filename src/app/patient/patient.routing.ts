@@ -7,35 +7,42 @@ import { PatientProfileComponent } from './profile/patient-profile/patient-profi
 import { authGuard } from '../auth/auth.guard';
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 import { AddContactComponent } from './profile/add-contact/add-contact.component';
+import { PatientComponent } from './patient.component';
 
 const routes: Routes = [
   {
-    path: 'bookAppointment',
-    canActivate: [authGuard],
-    component: BookAppointmentComponent,
-  },
-  {
-    path: 'addBookAppointment',
-    canActivate: [authGuard],
-    component: AddBookAppointmentComponent,
-  },
-  {
-    path: 'reshedule/:id',
-    canActivate: [authGuard],
-    component: RescheduleAppointmentComponent,
-  },
-  {
-    path: 'patient-profile',
-    canActivate: [authGuard],
-    component: PatientProfileComponent,
-  },
-  {
-    path: 'edit-profile',
-    component: EditProfileComponent,
-  },
-  {
-    path: 'addEmergencyContact',
-    component: AddContactComponent,
+    path: 'patients',
+    component: PatientComponent,
+    children: [
+      {
+        path: 'bookAppointment',
+        // canActivate: [authGuard],
+        component: BookAppointmentComponent,
+      },
+      {
+        path: 'addBookAppointment',
+        canActivate: [authGuard],
+        component: AddBookAppointmentComponent,
+      },
+      {
+        path: 'reshedule/:id',
+        canActivate: [authGuard],
+        component: RescheduleAppointmentComponent,
+      },
+      {
+        path: 'patient-profile',
+        canActivate: [authGuard],
+        component: PatientProfileComponent,
+      },
+      {
+        path: 'edit-profile',
+        component: EditProfileComponent,
+      },
+      {
+        path: 'addEmergencyContact',
+        component: AddContactComponent,
+      },
+    ],
   },
 ];
 

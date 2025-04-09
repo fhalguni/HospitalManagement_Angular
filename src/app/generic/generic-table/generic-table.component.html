@@ -1,0 +1,29 @@
+<div class="table-wrapper">
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th *ngFor="let column of columns">{{ column.label }}</th>
+        <th *ngIf="actions.length > 0">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let item of data"
+        [attr.data-status]="item.status?.toLowerCase()"
+      >
+        <td *ngFor="let column of columns" [attr.data-label]="column.label">
+          {{ getColumnData(item, column.key) }}
+        </td>
+        <td *ngFor="let action of actions" [attr.data-label]="action.label">
+          <button
+            [ngClass]="action.class"
+            (click)="action.callback(item)"
+            [disabled]="action.disabled?.(item)"
+          >
+            <span class="btn-icon">{{ action.icon }}</span> {{ action.label }}
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

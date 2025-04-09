@@ -16,6 +16,8 @@ export class AddDoctorComponent {
     name: new FormControl(''),
     speciality: new FormControl(''),
     email: new FormControl(''),
+    gender: new FormControl(''),
+    degree: new FormControl(''),
   });
 
   onSubmit() {
@@ -23,12 +25,12 @@ export class AddDoctorComponent {
       console.log('Doctor created', data);
       // Trigger SweetAlert
       Swal.fire({
-        title: 'Success!',
+        title: 'Mail send successfully',
         text: 'Doctor has been created successfully.',
         icon: 'success',
         confirmButtonText: 'OK',
       });
-      this.route.navigate(['/allDoctors']);
+      this.route.navigate(['/admin', 'allDoctors']);
     });
   }
 }

@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth/auth.service';
+import { NavigationEnd, Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-root',
@@ -7,33 +9,21 @@ import { AuthService } from './auth/auth.service';
   standalone: false,
   styleUrl: './app.component.css',
 })
-export class AppComponent {
-  // In your component
-  showPatientsSubMenu = false;
-  showDoctorsSubMenu = false;
-
-  isTokenPresent = false;
-
-  getToken() {
-    const token = localStorage.getItem('token');
-    if (token) {
-      this.isTokenPresent = true;
-    }
-    this.isTokenPresent = false;
-  }
-  togglePatientsMenu() {
-    this.showPatientsSubMenu = !this.showPatientsSubMenu;
+export class AppComponent implements OnInit {
+  constructor(
+    private authService: AuthService,
+    private route: Router,
+    private cookie: CookieService
+  ) {
+    this.cookie.deleteAll();
   }
 
-  toggleDoctorsMenu() {
-    this.showDoctorsSubMenu = !this.showDoctorsSubMenu;
-  }
-  title = 'frontend_HospitalManagementSystem';
-
-  constructor(private authService: AuthService) {}
+  ngOnInit() {}
 
   logOut() {
     this.authService.logOut();
-    localStorage.clear();
+    this.cookie.deleteAll();
+    // this.isLoggedIn = false;
+    this.route.navigate(['/login']);
   }
 }

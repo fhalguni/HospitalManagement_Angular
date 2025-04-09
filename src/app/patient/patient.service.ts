@@ -5,18 +5,20 @@ import { Doctor } from '../models/doctor.model';
 import { map, Observable } from 'rxjs';
 import { decodeToken } from '../auth/getToken';
 import { Appointment } from '../models/appointment.model';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PatientService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private cookie: CookieService) {}
 
   private api = 'http://localhost:8000';
 
   // Safely fetch the patient ID
   private getPatientId(): string | null {
-    const token = localStorage.getItem('token');
+    const token = this.cookie.get('token');
+    console.log(token);
     return decodeToken(token!);
   }
 
@@ -26,13 +28,17 @@ export class PatientService {
 
   getAllAppointments(): Observable<any[]> {
     const patientId = this.getPatientId(); // Fetch dynamically
+    console.log(patientId);
+
     return this.http.get<any[]>(
       `${this.api}/patient/getAllAppointment/${patientId}`
     );
   }
 
   bookAppointment(data: any): Observable<any> {
-    const patientId = this.getPatientId(); // Fetch dynamically
+    const patientId = this.getPatientId();
+    console.log(patientId);
+    // Fetch dynamically
     return this.http.post(
       `${this.api}/book/bookAppointment/${patientId}`,
       data
@@ -88,6 +94,13 @@ export class PatientService {
 
     return this.http.delete(`${this.api}/contact/deleteContact/${patientId}`, {
       body: { contactId },
+    });
+  }
+
+  changePassword(data: any) {
+    const patientId = this.getPatientId();
+    return this.http.put(`${this.api}/auth/changePassword/${patientId}`, {
+      ...data,
     });
   }
 }

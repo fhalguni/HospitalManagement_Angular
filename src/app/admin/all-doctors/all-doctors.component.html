@@ -1,7 +1,11 @@
-<!-- doctors-listing.component.html -->
-<button routerLink="/createDoctor">create doctor</button>
 <div class="doctors-container">
   <h1>Our Medical Team</h1>
+
+  <button routerLink="/admin/createDoctor" class="create-doctor-btn">
+    <span class="material-icons">add_circle</span>
+    Create Doctor
+  </button>
+
   <div class="search-bar">
     <input
       type="text"
@@ -14,17 +18,25 @@
   </div>
 
   <div class="doctors-grid">
-    <div class="doctor-card" *ngFor="let doctor of filteredDoctors()">
+    <div
+      class="doctor-card"
+      *ngFor="let doctor of filteredDoctors()"
+      [ngClass]="{ 'inactive-doctor': !doctor.isActive }"
+    >
       <div class="doctor-avatar">
         <div class="avatar-placeholder">
-          <span
-            >{{ doctor.name.split(" ")[0][0]
-            }}{{ doctor.name.split(" ")[1][0] }}</span
-          >
+          <span>
+            {{ doctor.name.split(" ")[0][0]
+            }}{{
+              doctor.name.split(" ")[1] ? doctor.name.split(" ")[1][0] : ""
+            }}
+          </span>
         </div>
       </div>
       <div class="doctor-details">
-        <h2>{{ doctor.name }}</h2>
+        <h2>
+          {{ doctor.name }}
+        </h2>
         <span class="speciality-tag">{{ doctor.speciality }}</span>
         <div class="contact-info">
           <div class="info-item">
@@ -32,27 +44,42 @@
             <p>{{ doctor.email }}</p>
           </div>
           <!-- <div class="info-item">
-            <span class="material-icons">badge</span>
-            <p>ID: {{ doctor.id }}</p>
+            <span class="material-icons">phone</span>
+            <p>{{ doctor.phone || "Not provided" }}</p>
           </div> -->
         </div>
         <div class="action-buttons">
           <button class="btn primary" (click)="getAppointment(doctor.id)">
-            See Appointment
+            <span class="material-icons">calendar_today</span>
+            See Appointments
           </button>
-          <button class="btn secondary" (click)="showPassword(doctor.id)">
-            View Password
+          <button class="btn secondary" (click)="togglePassword(doctor.id)">
+            <span class="material-icons">visibility</span>
+            {{ showPasswordId === doctor.id ? "Hide" : "Show" }} Password
+          </button>
+          <button
+            class="btn"
+            [ngClass]="doctor.isActive ? 'danger' : 'success'"
+            (click)="confirmToggleActiveStatus(doctor)"
+          >
+            <span class="material-icons">{{
+              doctor.isActive ? "person_off" : "person_add"
+            }}</span>
+            {{ doctor.isActive ? "Inactivate" : "Activate" }}
           </button>
 
-          <p *ngIf="isDisplay">
+          <div *ngIf="showPasswordId === doctor.id" class="password-display">
+            <span class="material-icons">lock</span>
             {{ doctor.password }}
-          </p>
-
-          <button class="btn secondary" (click)="deleteDoctor(doctor.id)">
-            InActivate
-          </button>
+          </div>
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="empty-state" *ngIf="filteredDoctors().length === 0">
+    <span class="material-icons">search_off</span>
+    <h3>No doctors found</h3>
+    <p>Try adjusting your search criteria or add a new doctor</p>
   </div>
 </div>

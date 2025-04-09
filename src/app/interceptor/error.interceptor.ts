@@ -9,7 +9,9 @@ import {
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, Observable, throwError } from 'rxjs';
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class httpErrorInterceptor implements HttpInterceptor {
   constructor(private snackBar: MatSnackBar) {}
   intercept(
